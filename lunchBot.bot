@@ -1,0 +1,15 @@
+{
+    "name": "lunchBot",
+    "description": "",
+    "secretKey": "",
+    "services": [
+        {
+            "id": "f6949ea0-903d-11e8-9590-59b0db35d878",
+            "name": "lunchBot",
+            "type": "endpoint",
+            "appId": "",
+            "appPassword": "",
+            "endpoint": "http://localhost:3979/api/messages"
+        }
+    ]
+}
