@@ -17,20 +17,14 @@
         public static MenuManager MenuManager { get; set; }
         public static LunchMenu LunchMenu { get; set; }
 
-        private const string ShowInlineAttachment = "(1) Show inline attachment";
-        private const string ShowUploadedAttachment = "(2) Show uploaded attachment";
-        private const string ShowInternetAttachment = "(3) Show Internet attachment";
-
-        private readonly IDictionary<string, string> options = new Dictionary<string, string>
-        {
-            { "1", ShowInlineAttachment },
-            { "2", ShowUploadedAttachment },
-            { "3", ShowInternetAttachment }
-        };
-
         public async Task StartAsync(IDialogContext context)
         {
-            MenuManager = new MenuManager() { FilePath = @"C:\Users\cdavidso\Desktop\parser\menu.pdf" };
+            // TODO: Asynchronous menu
+            // 1. Make menu fetch asnyc
+            // 2. Update MenuManager with a HasLatest prop
+            // 3. if (!menuManager.HasLatest) 
+            //      push message("Lemme go grab the menu");
+            MenuManager = new MenuManager() { FilePath = @".\menu.pdf" };
             LunchMenu = MenuManager.LunchMenu;
 
             context.Wait(this.MessageReceivedAsync);
@@ -45,7 +39,6 @@
 
             await context.PostAsync(welcomeMessage);
 
-            //await this.DisplayOptionsAsync(context);
             await this.CollectUserInput(context);
         }
 
@@ -60,6 +53,8 @@
 
         private async Task ProcessUserInput(IDialogContext context, IAwaitable<string> result)
         {
+            // TODO: Can we implement cognitive services to improve conversation?
+            // Conversion from DayOfWeek to int is hacky
             var message = await result;
 
             var replyMessage = context.MakeMessage();
@@ -105,6 +100,8 @@
             await this.CollectUserInput(context);
         }
 
+        // Is there a way to show inline? 
+        // Convert to png?
         private Attachment GetMenuDocument(object filePath)
         {
             return new Attachment(
@@ -114,6 +111,7 @@
                 "MegaBytes Menu");
         }
 
+        // TODO: Move into the menu object as a .ToString()
         private string GetMenuWeek()
         {
             var fullMenu = "";
@@ -126,6 +124,7 @@
             return fullMenu;
         }
 
+        // TODO: Move into the menu object as a .ToString()
         private string GetDaysMenu(int dayOfWeek)
         {
             var today = LunchMenu.Menu[dayOfWeek];

@@ -328,3 +328,10 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+.cov/analysis-config.options.json
+.cov/evaluate-configuration-idir/emit/DAVIDSONM4800/emit-db
+.cov/evaluate-configuration-idir/emit/DAVIDSONM4800/emit-db.lock
+.cov/evaluate-configuration-idir/emit/version
+.cov/evaluate-configuration-idir/output/cov-run-desktop-log.txt
+.cov/evaluate-configuration-idir/output/version
+.cov/evaluated-coverity.conf
