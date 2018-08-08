@@ -24,7 +24,9 @@
             // 2. Update MenuManager with a HasLatest prop
             // 3. if (!menuManager.HasLatest) 
             //      push message("Lemme go grab the menu");
-            MenuManager = new MenuManager() { FilePath = @".\menu.pdf" };
+            MenuManager = new MenuManager()
+            { FilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PDFParser\" };
+
             LunchMenu = MenuManager.LunchMenu;
 
             context.Wait(this.MessageReceivedAsync);
@@ -42,6 +44,10 @@
             await this.CollectUserInput(context);
         }
 
+        // TODO: 
+        // Asnyc fetching the menu.
+        // It'd be cool to see the bot warn the user if
+        // PDFParser had to fetch the menu.
         public async Task CollectUserInput(IDialogContext context)
         {
             PromptDialog.Text(
@@ -63,25 +69,19 @@
 
             if (message.Contains("today"))
             {
-                replyMessage.Text = "Today's menu:\n" + GetDaysMenu(dayOfWeek);
+                replyMessage.Text = "Today's menu:\n" + LunchMenu[dayOfWeek].ToString();
             }
             else if (message.Contains("tomorrow"))
             {
-                replyMessage.Text = GetDaysMenu(dayOfWeek + 1);
+                replyMessage.Text = LunchMenu[dayOfWeek + 1].ToString();
             }
             else if (message.Contains("week"))
             {
                 replyMessage.Text = "Here's the rest of the week:";
                 await context.PostAsync(replyMessage);
 
-                for (int i = dayOfWeek; i < 5; i++)
-                {
-                    replyMessage.Text = $"{Enum.GetName(typeof(DayOfWeek), i + 1)}:\n{GetDaysMenu(i)}\n\n\n";
-                    await context.PostAsync(replyMessage);
-                }
-
-                replyMessage.Text = "";
-
+                LunchMenu.ForEach(async x =>
+                    await context.PostAsync(context.MakeMessage().Text = x.ToString()));
             }
             else if (message.Contains("whole menu"))
             {
@@ -109,29 +109,6 @@
                 MenuManager.FilePath,
                 null,
                 "MegaBytes Menu");
-        }
-
-        // TODO: Move into the menu object as a .ToString()
-        private string GetMenuWeek()
-        {
-            var fullMenu = "";
-
-            for (int i = 0; i < 5; i++)
-            {
-                fullMenu += $"{Enum.GetName(typeof(DayOfWeek), i)}:\n{GetDaysMenu(i)}";
-            }
-
-            return fullMenu;
-        }
-
-        // TODO: Move into the menu object as a .ToString()
-        private string GetDaysMenu(int dayOfWeek)
-        {
-            var today = LunchMenu.Menu[dayOfWeek];
-
-            var stationStrs = today.FoodStations.Select(s => $"{s.FoodName} ${s.Price}\n");
-
-            return string.Join("\n", stationStrs);
         }
     }
 }
