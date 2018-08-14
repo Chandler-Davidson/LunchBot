@@ -25,7 +25,7 @@
             // 3. if (!menuManager.HasLatest) 
             //      push message("Lemme go grab the menu");
             MenuManager = new MenuManager()
-            { FilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PDFParser\" };
+            { DirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PDFParser\" };
 
             LunchMenu = MenuManager.LunchMenu;
 
@@ -85,7 +85,7 @@
             }
             else if (message.Contains("whole menu"))
             {
-                Attachment attachment = GetMenuDocument(MenuManager.FilePath);
+                Attachment attachment = GetMenuDocument(MenuManager.DirectoryPath);
                 replyMessage.Text = "Here you are!";
                 replyMessage.Attachments = new List<Attachment> { attachment };
             }
@@ -106,7 +106,7 @@
         {
             return new Attachment(
                 "image/pdf",
-                MenuManager.FilePath,
+                MenuManager.DirectoryPath,
                 null,
                 "MegaBytes Menu");
         }
