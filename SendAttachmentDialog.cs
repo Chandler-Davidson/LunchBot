@@ -27,7 +27,9 @@
             MenuManager = new MenuManager()
             { DirectoryPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\PDFParser\" };
 
-            LunchMenu = MenuManager.LunchMenu;
+            var welcomeMessage = context.MakeMessage();
+            welcomeMessage.Text = $"Hey, {context.Activity.Recipient.Name} I'm lunch bot.";
+            await context.PostAsync(welcomeMessage);
 
             context.Wait(this.MessageReceivedAsync);
         }
@@ -36,12 +38,31 @@
         {
             var message = await result;
 
-            var welcomeMessage = context.MakeMessage();
-            welcomeMessage.Text = $"Hey, {context.Activity.Recipient.Name} I'm lunch bot.";
+            if (!MenuManager.HasCurrentMenu)
+            {
+                var fetchingMenuMessage = context.MakeMessage();
+                fetchingMenuMessage.Text = $"Sorry, lemme grab the menu...";
+                await context.PostAsync(fetchingMenuMessage);
 
-            await context.PostAsync(welcomeMessage);
+                var newMenu = GetNewMenu();
+
+                LunchMenu = await newMenu;
+            }
+            else
+            {
+                LunchMenu = MenuManager.LunchMenu;
+            }
+
+
+
+
 
             await this.CollectUserInput(context);
+        }
+
+        private async Task<LunchMenu> GetNewMenu()
+        {
+            return MenuManager.LunchMenu;
         }
 
         // TODO: 
