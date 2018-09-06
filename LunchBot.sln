@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LunchBot", "LunchBot.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendAttachmentBot", "SendAttachmentBot.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "README", "README", "{055ED3AE-16F9-4B26-91EC-58F697F659CA}"
 	ProjectSection(SolutionItems) = preProject
@@ -23,8 +23,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {49A2AC1A-B86F-4D81-A306-69E21069D878}
 	EndGlobalSection
 EndGlobal
